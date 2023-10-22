@@ -54,7 +54,10 @@ while True:
                     except KeyError:
                         pass
 
-                    print(f"Preparation: {cocktail['preparation']}")
+                    try:
+                        print(f"Preparation: {cocktail['preparation']}")
+                    except KeyError:
+                        pass
 
                     draw_line()
                     again = input("Search again? (yes / no)")
