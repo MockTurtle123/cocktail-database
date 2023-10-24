@@ -5,6 +5,19 @@ def convert_cl(cl):
     """ Returns milliliters"""
     return int(cl * 10)
 
+
+def search_by_ingredient(ingredient, recipe_book):
+    ingredient = ingredient.lower()
+    found_matches = []
+    for cocktail in recipe_book:
+        for item in cocktail['ingredients']:
+            try:
+                if ingredient in item['ingredient'].lower():
+                    found_matches.append(cocktail['name'])
+            except KeyError:
+                continue
+    return found_matches
+
 def display_info(name, recipe_book):
     info = []
     for cocktail in recipe_book:
