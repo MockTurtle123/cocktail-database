@@ -1,20 +1,15 @@
 import json
+from functions import draw_line, convert_cl
 
-
-def convert_cl(cl):
-    """ Returns milliliters"""
-    return int(cl * 10)
-
-
-def draw_line():
-    print('\n' + '-' * 40)
 
 with open('recipes.json', 'r', encoding='utf-8') as file:
     content = file.read()
 
 recipes = json.loads(content)
 
-menu = ['1. Search by name', '2. Search by ingredient', '3. Print out all the cocktails (alphabetically)', '4. Exit']
+menu = ['1. Search by name', '2. Search by ingredient',
+        '3. Print out all the cocktails (alphabetically)', '4. Exit',
+        '5. Delete an item']
 print("Welcome to the cocktail database.")
 
 while True:
@@ -27,17 +22,13 @@ while True:
 
     match user_action:
         case '1':
-            name = input('Type the name of the cocktail: ')
-            name = name.lower()
+            name = input('Type the name of the cocktail: ').lower()
             for cocktail in recipes:
                 if name == cocktail['name'].lower():
                     draw_line()
-                    if cocktail['glass'].startswith("o"):
-                        print(f"{cocktail['name']} is typically served in an {cocktail['glass']} glass.\n\n"
+                    article = "an" if cocktail['glass'].startswith("o") else "a"
+                    print(f"{cocktail['name']} is typically served in {article} {cocktail['glass']} glass.\n\n"
                           f"Ingredients:")
-                    else:
-                        print(f"{cocktail['name']} is typically served in a {cocktail['glass']} glass.\n\n"
-                              f"Ingredients:")
                     for item in cocktail["ingredients"]:
                         try:
                             print(f"{convert_cl(item['amount'])}ml of {item['ingredient']}")
@@ -61,9 +52,7 @@ while True:
 
                     draw_line()
                     again = input("Search again? (yes / no)")
-                    if again == 'yes':
-                        continue
-                    else:
+                    if again == 'no':
                         exit()
 
 
@@ -98,3 +87,11 @@ while True:
 
         case '4':
             exit()
+
+        case '5':
+            name = input('Type the name of cocktail: ')
+            name = name.lower()
+            for cocktail in recipes:
+                if cocktail['name'].lower() == name:
+                    recipes.pop(recipes.index(cocktail))
+
