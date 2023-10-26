@@ -28,9 +28,12 @@ def display_info(name, recipe_book):
                           f"Ingredients:")
             for item in cocktail["ingredients"]:
                 try:
-                    info.append(f"{convert_cl(item['amount'])}ml of {item['ingredient']}")
+                    info.append(f"{convert_cl(item['amount'])}ml of {item['ingredient']} ({item['label']})")
                 except KeyError:
-                    pass
+                    try:
+                        info.append(f"{convert_cl(item['amount'])}ml of {item['ingredient']}")
+                    except KeyError:
+                        pass
             info.append('\n')
             for item in cocktail["ingredients"]:
                 try:
