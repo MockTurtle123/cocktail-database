@@ -7,6 +7,8 @@ import PySimpleGUI as sg
 with open('recipes.json', 'r', encoding='utf-8') as file:
     content = file.read()
 
+sg.theme('DarkGreen')
+
 # import recipes
 recipes = json.loads(content)
 default_str = 'available recipes:'
